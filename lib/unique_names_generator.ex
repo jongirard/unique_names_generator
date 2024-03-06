@@ -1,15 +1,29 @@
 defmodule UniqueNamesGenerator do
+  alias UniqueNamesGenerator.Impl.Dictionaries
   @moduledoc """
   Documentation for `UniqueNamesGenerator`.
   """
 
   @doc """
-  Hello world.
+  Dictionaries list is required (at least one of "animals", "adjectives", "colors", "languages", "names", "star-wars") and/or a custom list of strings. Config map optional.
 
   ## Examples
 
-      iex> UniqueNamesGenerator.hello()
-      :world
+      iex> UniqueNamesGenerator.generate(["colors", "animals"], %{seed: "hello", style: :capital, separator: " "})
+      "Lavender Marlin"
+
+      iex> UniqueNamesGenerator.generate(["colors", "animals"], %{seed: "03bf0706-b7e9-33b8-aee5-c6142a816478", style: :capital, separator: " "})
+      "Brown Dooku"
+
+      iex> drinks = ["Sprite", "Coca-Cola", "Juice", "Tea"]
+      iex(1)> UniqueNamesGenerator.generate(["colors", drinks], %{seed: 50, style: :capital, separator: "-"})
+      "Teal-Tea"
+
+      iex> UniqueNamesGenerator.generate(["adjectives", "animals"])
+      "respectable_bear"
 
   """
+  @spec generate([Dictionaries.dictionaries() | nonempty_list(String.t)], Dictionaries.options()) :: String.t
+  @spec generate([Dictionaries.dictionaries() | nonempty_list(String.t)]) :: String.t
+  defdelegate generate(dictionaries, options \\ %{}), to: Dictionaries
 end

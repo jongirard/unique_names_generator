@@ -1,11 +1,16 @@
 defmodule UniqueNamesGenerator.Impl.Dictionaries do
+  @moduledoc """
+    Documentation for `UniqueNamesGenerator.Impl.Dictionaries`.
+  """
+
   alias UniqueNamesGenerator.Impl.Seed
 
-  @type t :: list(String.t)
   @type style() :: :capital | :uppercase | :lowercase
   @type options() :: %{ optional(:separator) => String.t, optional(:style) => style(), optional(:seed) => String.t | integer() }
+  @type dictionaries() :: :animals | :adjectives | :colors | :languages | :names | :star_wars
   @config %{separator: "_", style: :lowercase, seed: nil}
 
+  @doc false
   @spec expand_word_list(String.t) :: [String.t]
   def expand_word_list(dictionary) do
     "../../assets/#{dictionary}.txt"
@@ -15,29 +20,34 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
   end
 
   @spec word_list(String.t | [String.t, ...]) :: [String.t]
-  def word_list(dictionary) do
+  defp word_list(dictionary) do
     cond do
       is_list(dictionary) ->
         dictionary
       is_binary(dictionary) ->
         expand_word_list(dictionary)
+      is_atom(dictionary) ->
+        expand_word_list(dictionary)
+      true ->
+        raise ArgumentError, message: "Dictionary contains invalid dictionary type"
     end
   end
 
   @spec parse_file({:ok, binary()}, any()) :: [String.t]
-  def parse_file({ :ok, file }, _) do
+  defp parse_file({ :ok, file }, _) do
     String.split(file)
   end
 
-  def parse_file({ :error, _reason }, dictionary) do
+  defp parse_file({ :error, _reason }, dictionary) do
     raise ArgumentError, message: "The dictionary: #{dictionary} is invalid"
   end
 
   @spec map_dictionaries([String.t]) :: [[String.t]]
-  def map_dictionaries(dictionaries) do
+  defp map_dictionaries(dictionaries) do
     Enum.map(dictionaries, fn dictionary -> word_list(dictionary) end)
   end
 
+  @doc false
   @spec call_seeder(String.t | nil) :: %{a: integer(), b: integer(), c: integer()}
   def call_seeder(seed) do
     cond do
@@ -50,7 +60,7 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
   end
 
   @spec get_random_float(any()) :: float()
-  def get_random_float(seed) do
+  defp get_random_float(seed) do
     %{ a: a, b: b, c: c } = call_seeder(seed)
     :rand.seed(:exro928ss, {a, b, c})
 
@@ -59,7 +69,7 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
   end
 
   @spec format_word(String.t, style()) :: String.t
-  def format_word(word, style) do
+  defp format_word(word, style) do
     case style do
       :capital ->
         String.capitalize(word)
@@ -73,12 +83,12 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
   end
 
   @spec set_defaults(options()) :: %{separator: String.t, style: style(), seed: String.t | integer() }
-  def set_defaults(options) do
+  defp set_defaults(options) do
     Enum.into(options, @config)
   end
 
-  @spec generate([String.t], options()) :: String.t
-  @spec generate([String.t, ...]) :: String.t
+  @spec generate([dictionaries() | nonempty_list(String.t)], options()) :: String.t
+  @spec generate([dictionaries() | nonempty_list(String.t)]) :: String.t
   def generate(dictionaries, options \\ %{}) do
     %{separator: separator, style: style, seed: seed} = set_defaults(options)
 

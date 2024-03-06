@@ -1,11 +1,10 @@
 defmodule Impl.DictionariesTest do
   use ExUnit.Case
   alias UniqueNamesGenerator.Impl.Dictionaries
-  # doctest UniqueNamesGenerator
 
   describe "generate/1" do
     test "it can generate a name with default config and packaged dictionary" do
-      assert is_binary(Dictionaries.generate(["star-wars"])) === true
+      assert is_binary(Dictionaries.generate([:star_wars])) === true
     end
 
     test "it can generate a name with custom dictionary" do
@@ -36,7 +35,7 @@ defmodule Impl.DictionariesTest do
 
     Enum.each seed_string_cases, fn({input, expected_output}) ->
       test "Based on a PRNG string based seed of #{input} it can generate a predicted word: #{expected_output}" do
-        assert Dictionaries.generate(["colors", "star-wars"], %{ seed: unquote(input) }) === unquote(expected_output)
+        assert Dictionaries.generate(["colors", "star_wars"], %{ seed: unquote(input) }) === unquote(expected_output)
       end
     end
 

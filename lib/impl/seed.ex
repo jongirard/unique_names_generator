@@ -1,6 +1,7 @@
 defmodule UniqueNamesGenerator.Impl.Seed do
   import Bitwise
 
+  @doc false
   @spec generate_seed(binary() | integer()) :: %{a: integer(), b: integer(), c: integer()}
   def generate_seed(seed) do
     seed
@@ -12,7 +13,7 @@ defmodule UniqueNamesGenerator.Impl.Seed do
   end
 
   @spec process_received_value(String.t | integer()) :: integer() | Exception.t
-  def process_received_value(seed) do
+  defp process_received_value(seed) do
     cond do
       is_binary(seed) ->
         transform_string(seed)
@@ -24,13 +25,14 @@ defmodule UniqueNamesGenerator.Impl.Seed do
   end
 
   @spec transform_string(String.t) :: integer()
-  def transform_string(seed) do
+  defp transform_string(seed) do
     seed <> <<0>>
     |> :binary.bin_to_list()
     |> Enum.join()
     |> String.to_integer()
   end
 
+  @doc false
   @spec remove_decimal(float()) :: [String.t]
   def remove_decimal(float) do
     float
@@ -39,6 +41,7 @@ defmodule UniqueNamesGenerator.Impl.Seed do
     |> Enum.filter(fn stringified_point -> stringified_point !== "." end)
   end
 
+  @doc false
   @spec chunk_result([String.t]) :: [[String.t], ...]
   def chunk_result(result) do
     desired_amount_of_sublists = 3
@@ -49,6 +52,7 @@ defmodule UniqueNamesGenerator.Impl.Seed do
     Enum.chunk_every(result, chunk_length, chunk_length, :discard)
   end
 
+  @doc false
   @spec convert_chunk_to_map([[String.t], ...]) :: %{a: integer(), b: integer(), c: integer()}
   def convert_chunk_to_map(chunk) do
     [a, b, c] = Enum.map(chunk, fn numbers ->
@@ -59,6 +63,7 @@ defmodule UniqueNamesGenerator.Impl.Seed do
     %{ a: a, b: b, c: c }
   end
 
+  @doc false
   @spec mulberry32(integer()) :: float()
   def mulberry32(seed) do
     t = seed + 0x6d2b79f5 ||| 0
@@ -70,6 +75,7 @@ defmodule UniqueNamesGenerator.Impl.Seed do
     (bxor(t, bsr(t, 14))) / 4294967296
   end
 
+  @doc false
   @spec imul(integer(), integer()) :: integer()
   def imul(x, y) do
     <<result::signed-32>> = <<x * y::32>>
