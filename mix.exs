@@ -7,12 +7,14 @@ defmodule UniqueNamesGenerator.MixProject do
   def project do
     [
       app: :unique_names_generator,
+      description: "Elixir library for generating random and unique names",
       version: @version,
       authors: ["Jon Girard (jongirard)"],
       elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       docs: docs(),
+      package: package()
     ]
   end
 
@@ -39,6 +41,15 @@ defmodule UniqueNamesGenerator.MixProject do
       canonical: "https://hexdocs.pm/unique_names_generator",
       source_url: @source_url,
       extras: ["README.md", "LICENSE"]
+    ]
+  end
+
+  # Hex.pm package config
+  defp package() do
+    [
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/jongirard/unique_names_generator"},
+      maintainers: ["Jon Girard"]
     ]
   end
 end
