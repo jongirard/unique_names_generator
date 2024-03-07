@@ -5,14 +5,14 @@ defmodule UniqueNamesGenerator do
   """
 
   @doc """
-  Dictionaries list is required (at least one of "animals", "adjectives", "colors", "languages", "names", "star-wars") and/or a custom list of strings. Config map optional.
+  Dictionaries list is required (at least one of `t:UniqueNamesGenerator.Impl.Dictionaries.dictionaries/0` and/or a custom list of strings). Config map optional.
 
   ## Examples
 
       iex> UniqueNamesGenerator.generate([:colors", :animals], %{seed: "hello", style: :capital, separator: " "})
       "Lavender Marlin"
 
-      iex> UniqueNamesGenerator.generate([:colors, :animals], %{seed: "03bf0706-b7e9-33b8-aee5-c6142a816478", style: :capital, separator: " "})
+      iex> UniqueNamesGenerator.generate([:colors, :star_wars], %{seed: "03bf0706-b7e9-33b8-aee5-c6142a816478", style: :capital, separator: " "})
       "Brown Dooku"
 
       iex> drinks = ["Sprite", "Coca-Cola", "Juice", "Tea"]
