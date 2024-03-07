@@ -9,21 +9,21 @@ defmodule UniqueNamesGenerator do
 
   ## Examples
 
-      iex> UniqueNamesGenerator.generate(["colors", "animals"], %{seed: "hello", style: :capital, separator: " "})
+      iex> UniqueNamesGenerator.generate([:colors", :animals], %{seed: "hello", style: :capital, separator: " "})
       "Lavender Marlin"
 
-      iex> UniqueNamesGenerator.generate(["colors", "animals"], %{seed: "03bf0706-b7e9-33b8-aee5-c6142a816478", style: :capital, separator: " "})
+      iex> UniqueNamesGenerator.generate([:colors, :animals], %{seed: "03bf0706-b7e9-33b8-aee5-c6142a816478", style: :capital, separator: " "})
       "Brown Dooku"
 
       iex> drinks = ["Sprite", "Coca-Cola", "Juice", "Tea"]
-      iex(1)> UniqueNamesGenerator.generate(["colors", drinks], %{seed: 50, style: :capital, separator: "-"})
+      iex(1)> UniqueNamesGenerator.generate([:colors, drinks], %{seed: 50, style: :capital, separator: "-"})
       "Teal-Tea"
 
-      iex> UniqueNamesGenerator.generate(["adjectives", "animals"])
+      iex> UniqueNamesGenerator.generate([:adjectives, :animals])
       "respectable_bear"
 
   """
-  @spec generate([Dictionaries.dictionaries() | nonempty_list(String.t)], Dictionaries.options()) :: String.t
-  @spec generate([Dictionaries.dictionaries() | nonempty_list(String.t)]) :: String.t
+  @spec generate(nonempty_list(Dictionaries.dictionaries() | String.t | [String.t, ...])) :: String.t
+  @spec generate(nonempty_list(Dictionaries.dictionaries() | String.t | [String.t, ...]), Dictionaries.options()) :: String.t
   defdelegate generate(dictionaries, options \\ %{}), to: Dictionaries
 end

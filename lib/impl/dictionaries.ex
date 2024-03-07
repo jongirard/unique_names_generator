@@ -5,7 +5,7 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
 
   alias UniqueNamesGenerator.Impl.Seed
 
-  @type style() :: :capital | :uppercase | :lowercase
+  @type style() :: :capital | :titlecase | :uppercase | :lowercase
   @type options() :: %{ optional(:separator) => String.t, optional(:style) => style(), optional(:seed) => String.t | integer() }
   @type dictionaries() :: :animals | :adjectives | :colors | :languages | :names | :star_wars
   @config %{separator: "_", style: :lowercase, seed: nil}
@@ -19,7 +19,7 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
     |> parse_file(dictionary)
   end
 
-  @spec word_list(String.t | [String.t, ...]) :: [String.t]
+  @spec word_list(dictionaries() | String.t | [String.t, ...]) :: [String.t]
   defp word_list(dictionary) do
     cond do
       is_list(dictionary) ->
@@ -42,7 +42,7 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
     raise ArgumentError, message: "The dictionary: #{dictionary} is invalid"
   end
 
-  @spec map_dictionaries([String.t]) :: [[String.t]]
+  @spec map_dictionaries([dictionaries() | String.t | [String.t, ...], ...]) :: [[String.t]]
   defp map_dictionaries(dictionaries) do
     Enum.map(dictionaries, fn dictionary -> word_list(dictionary) end)
   end
@@ -73,12 +73,12 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
     case style do
       :capital ->
         String.capitalize(word)
+      :titlecase ->
+        :string.titlecase(word)
       :uppercase ->
         String.upcase(word)
       :lowercase ->
         String.downcase(word)
-      _ ->
-        word
     end
   end
 
@@ -87,8 +87,8 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
     Enum.into(options, @config)
   end
 
-  @spec generate([dictionaries() | nonempty_list(String.t)], options()) :: String.t
-  @spec generate([dictionaries() | nonempty_list(String.t)]) :: String.t
+  @spec generate(nonempty_list(dictionaries() | String.t | [String.t, ...])) :: String.t
+  @spec generate(nonempty_list(dictionaries() | String.t | [String.t, ...]), options()) :: String.t
   def generate(dictionaries, options \\ %{}) do
     %{separator: separator, style: style, seed: seed} = set_defaults(options)
 
