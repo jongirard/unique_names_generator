@@ -13,7 +13,7 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
   @doc false
   @spec expand_word_list(String.t) :: [String.t]
   def expand_word_list(dictionary) do
-    "../../assets/#{dictionary}.txt"
+    "../dictionaries/#{dictionary}.txt"
     |> Path.expand(__DIR__)
     |> File.read()
     |> parse_file(dictionary)
