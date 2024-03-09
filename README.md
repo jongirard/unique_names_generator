@@ -14,7 +14,7 @@ by adding `unique_names_generator` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:unique_names_generator, "~> 0.1.0"}
+    {:unique_names_generator, "~> 0.2.0"}
   ]
 end
 ```
