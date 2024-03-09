@@ -40,7 +40,7 @@ defmodule UniqueNamesGenerator.MixProject do
       name: "UniqueNamesGenerator",
       canonical: "https://hexdocs.pm/unique_names_generator",
       source_url: @source_url,
-      extras: ["README.md", "LICENSE"]
+      extras: ["README.md", "CHANGELOG.md", "LICENSE"]
     ]
   end
 
