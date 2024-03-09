@@ -1,4 +1,5 @@
 defmodule UniqueNamesGenerator.Impl.Seed do
+  @moduledoc false
   import Bitwise
 
   @doc false
