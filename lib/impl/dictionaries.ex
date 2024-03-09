@@ -4,42 +4,46 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
   """
 
   alias UniqueNamesGenerator.Impl.Seed
+  alias UniqueNamesGenerator.Dictionaries
 
   @type style() :: :capital | :titlecase | :uppercase | :lowercase
   @type options() :: %{ optional(:separator) => String.t, optional(:style) => style(), optional(:seed) => String.t | integer() }
   @type dictionaries() :: :animals | :adjectives | :colors | :languages | :names | :star_wars
   @config %{separator: "_", style: :lowercase, seed: nil}
 
-  @doc false
-  @spec expand_word_list(String.t) :: [String.t]
-  def expand_word_list(dictionary) do
-    "../dictionaries/#{dictionary}.txt"
-    |> Path.expand(__DIR__)
-    |> File.read()
-    |> parse_file(dictionary)
+  @spec camelize_dictionary(atom()) :: String.t
+  defp camelize_dictionary(dictionary) do
+    dictionary
+    |> Atom.to_string()
+    |> Macro.camelize()
   end
 
-  @spec word_list(dictionaries() | String.t | [String.t, ...]) :: [String.t]
+  @doc false
+  @spec match_word_list(atom()) :: [String.t]
+  def match_word_list(dictionary) do
+    try do
+      module = Module.safe_concat(Dictionaries, camelize_dictionary(dictionary))
+      module.list_all()
+    rescue
+      UndefinedFunctionError -> raise_invalid_dictionary(dictionary)
+      ArgumentError -> raise_invalid_dictionary(dictionary)
+    end
+  end
+
+  defp raise_invalid_dictionary(dictionary) do
+    raise ArgumentError, message: "Dictionary, #{dictionary} is invalid"
+  end
+
+  @spec word_list(dictionaries() | [String.t, ...]) :: [String.t]
   defp word_list(dictionary) do
     cond do
       is_list(dictionary) ->
         dictionary
-      is_binary(dictionary) ->
-        expand_word_list(dictionary)
       is_atom(dictionary) ->
-        expand_word_list(dictionary)
+        match_word_list(dictionary)
       true ->
         raise ArgumentError, message: "Dictionary contains invalid dictionary type"
     end
-  end
-
-  @spec parse_file({:ok, binary()}, any()) :: [String.t]
-  defp parse_file({ :ok, file }, _) do
-    String.split(file)
-  end
-
-  defp parse_file({ :error, _reason }, dictionary) do
-    raise ArgumentError, message: "The dictionary: #{dictionary} is invalid"
   end
 
   @spec map_dictionaries([dictionaries() | String.t | [String.t, ...], ...]) :: [[String.t]]
@@ -87,8 +91,8 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
     Enum.into(options, @config)
   end
 
-  @spec generate(nonempty_list(dictionaries() | String.t | [String.t, ...])) :: String.t
-  @spec generate(nonempty_list(dictionaries() | String.t | [String.t, ...]), options()) :: String.t
+  @spec generate(nonempty_list(dictionaries() | [String.t, ...])) :: String.t
+  @spec generate(nonempty_list(dictionaries() | [String.t, ...]), options()) :: String.t
   def generate(dictionaries, options \\ %{}) do
     %{separator: separator, style: style, seed: seed} = set_defaults(options)
 
