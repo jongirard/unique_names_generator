@@ -86,6 +86,12 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
     end
   end
 
+  defp format_with_separator(word, separator) do
+    word
+    |> String.split([" "])
+    |> Enum.join(separator)
+  end
+
   @spec set_defaults(options()) :: %{separator: String.t, style: style(), seed: String.t | integer() }
   defp set_defaults(options) do
     Enum.into(options, @config)
@@ -103,6 +109,7 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
       rnd = floor(random_float * length(x))
 
       word = Enum.at(x, rnd)
+      |> format_with_separator(separator)
       |> format_word(style)
 
       cond do
