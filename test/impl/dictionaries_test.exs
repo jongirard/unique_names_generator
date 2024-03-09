@@ -4,6 +4,7 @@ defmodule Impl.DictionariesTest do
   alias UniqueNamesGenerator.Impl.Dictionaries
   alias UniqueNamesGenerator.Dictionaries.Colors
   alias UniqueNamesGenerator.Dictionaries.Adjectives
+  alias UniqueNamesGenerator.Dictionaries.Numbers
 
   describe "generate/1" do
     test "it can generate a name with default config and packaged dictionary" do
@@ -21,6 +22,43 @@ defmodule Impl.DictionariesTest do
       assert String.contains?(result, Colors.list_all())
       assert String.contains?(result, Adjectives.list_all())
     end
+
+    test "it can generate a name with numbers" do
+      result = Dictionaries.generate([:colors, :numbers])
+
+      assert String.contains?(result, Colors.list_all())
+      assert String.contains?(result, Numbers.list_all())
+    end
+
+    test "it can generate a different random result" do
+      result1 = Dictionaries.generate([:colors, :names])
+      result2 = Dictionaries.generate([:colors, :names])
+
+      assert result1 !== result2
+    end
+
+    test "it can deterministically generate a word using multiple packaged dictionaries" do
+      result = Dictionaries.generate([:adjectives, :animals, :numbers], %{ seed: "a5372f76-a4ad-483c-8e48-794caf1b26a0"})
+      assert result === "jealous_junglefowl_456"
+    end
+
+    test "it can deterministically generate a word using multiple packaged and custom dictionaries" do
+      drinks = ["Tea", "Juice", "Coffee"]
+      result = Dictionaries.generate([:adjectives, drinks, :numbers], %{ seed: "a5372f76-a4ad-483c-8e48-794caf1b26a0"})
+      assert result === "jealous_juice_456"
+    end
+
+    test "it will throw an ArgumentError when a string dictionary reference is used" do
+      assert_raise ArgumentError, "Dictionary contains invalid dictionary type", fn ->
+        Dictionaries.generate(["colors", :adjectives])
+      end
+    end
+
+    test "it will raise an ArgumentError when a non dictionary atom is used" do
+      typo = :numgberrs
+      assert_raise ArgumentError, "Dictionary, #{typo} is invalid", fn ->
+        Dictionaries.generate([:adjectives, typo])
+      end
     end
   end
 

@@ -8,7 +8,7 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
 
   @type style() :: :capital | :titlecase | :uppercase | :lowercase
   @type options() :: %{ optional(:separator) => String.t, optional(:style) => style(), optional(:seed) => String.t | integer() }
-  @type dictionaries() :: :animals | :adjectives | :colors | :languages | :names | :star_wars
+  @type dictionaries() :: :animals | :adjectives | :colors | :languages | :names | :numbers | :star_wars
   @config %{separator: "_", style: :lowercase, seed: nil}
 
   @spec camelize_dictionary(atom()) :: String.t
