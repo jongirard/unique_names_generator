@@ -24,6 +24,20 @@ Then run `mix deps.get`.
 
 In a nutshell, you can begin generating randon names with UniqueNamesGenerator by simply specifying a list of one or more dictionaries via [generate/2](`UniqueNamesGenerator.generate/2`). Available dictionary types are `t:UniqueNamesGenerator.Impl.Dictionaries.dictionaries/0`.
 
+Available dictionaries include:
+- `:adjectives` - Descriptive adjectives
+- `:animals` - Animal names
+- `:architecture` - Architecture and building terms
+- `:colors` - Color names
+- `:countries` - Country names
+- `:food` - Food and culinary terms
+- `:languages` - Programming and spoken languages
+- `:names` - Person names
+- `:numbers` - Number words
+- `:scientists` - Famous scientist names
+- `:star_wars` - Star Wars character names
+- `:technology` - Technology and computing terms
+
 ```elixir
 UniqueNamesGenerator.generate([:adjectives, :animals])
 # => Generates ex: "dramatic_limpet"
@@ -33,6 +47,12 @@ UniqueNamesGenerator.generate([:adjectives, :colors, :animals])
 
 UniqueNamesGenerator.generate([:adjectives, :names, :numbers])
 # => Generates ex: "doubtful_wanda_979"
+
+UniqueNamesGenerator.generate([:scientists, :architecture])
+# => Generates ex: "einstein_cathedral"
+
+UniqueNamesGenerator.generate([:countries, :food])
+# => Generates ex: "france_croissant"
 ```
 
 To use custom dictionaries, simply include your list of strings as part of the dictionaries list:
@@ -62,6 +82,12 @@ _(**Usecase example:** generate a username for an authenticated user based on UU
 UniqueNamesGenerator.generate([:colors, :star_wars, :numbers], %{ seed: "03bf0706-b7e9-33b8-aee5-c6142a816478" })
 # => Seed "03bf0706-b7e9-33b8-aee5-c6142a816478" always generates: "brown_dooku_247"
 ```
+
+## Data Sources
+
+Dictionary data sourced from:
+- Original dictionaries: Custom curated lists
+- Extended dictionaries: [aziele/unique-namer](https://github.com/aziele/unique-namer) repository
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE file](https://github.com/jongirard/unique_names_generator/blob/development/LICENSE) for details.

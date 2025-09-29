@@ -13,7 +13,18 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
           optional(:seed) => String.t() | integer()
         }
   @type dictionaries() ::
-          :animals | :adjectives | :colors | :languages | :names | :numbers | :star_wars
+          :animals
+          | :adjectives
+          | :colors
+          | :languages
+          | :names
+          | :numbers
+          | :star_wars
+          | :architecture
+          | :countries
+          | :food
+          | :scientists
+          | :technology
   @config %{separator: "_", style: :lowercase, seed: nil}
 
   @spec camelize_dictionary(atom()) :: String.t()
