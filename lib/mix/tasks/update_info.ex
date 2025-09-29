@@ -124,7 +124,7 @@ defmodule Mix.Tasks.UpdateInfo do
        %{
          description: combination.description,
          dictionaries: available_dicts,
-         total_permutations: total_permutations,
+         total_permutations: format_number(total_permutations),
          formatted_permutations: format_number(total_permutations)
        }}
     else
@@ -140,19 +140,48 @@ defmodule Mix.Tasks.UpdateInfo do
     end
   end
 
+  defp format_number(num) when num >= 1_000_000_000_000_000_000 do
+    # For extremely large numbers, use simplified notation
+    "999T+"
+  end
+
+  defp format_number(num) when num >= 1_000_000_000_000_000 do
+    rounded = Float.round(num / 1_000_000_000_000_000, 1)
+    "#{format_float(rounded)}Q"
+  end
+
+  defp format_number(num) when num >= 1_000_000_000_000 do
+    rounded = Float.round(num / 1_000_000_000_000, 1)
+    "#{format_float(rounded)}T"
+  end
+
   defp format_number(num) when num >= 1_000_000_000 do
-    "#{Float.round(num / 1_000_000_000, 1)}B"
+    rounded = Float.round(num / 1_000_000_000, 1)
+    "#{format_float(rounded)}B"
   end
 
   defp format_number(num) when num >= 1_000_000 do
-    "#{Float.round(num / 1_000_000, 1)}M"
+    rounded = Float.round(num / 1_000_000, 1)
+    "#{format_float(rounded)}M"
   end
 
   defp format_number(num) when num >= 1_000 do
-    "#{Float.round(num / 1_000, 1)}K"
+    rounded = Float.round(num / 1_000, 1)
+    "#{format_float(rounded)}K"
   end
 
   defp format_number(num), do: to_string(num)
+
+  # Helper to format floats nicely (removes .0 if whole number)
+  defp format_float(float) do
+    rounded = Float.round(float, 0)
+
+    if float == rounded do
+      trunc(rounded) |> to_string()
+    else
+      to_string(float)
+    end
+  end
 
   defp write_info_file(info) do
     json_content = Jason.encode!(info, pretty: true)

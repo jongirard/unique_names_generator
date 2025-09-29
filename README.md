@@ -28,13 +28,14 @@ You can see all available dictionaries at any time:
 
 ```elixir
 UniqueNamesGenerator.available_dictionaries()
-# => [:adjectives, :animals, :architecture, :colors, :countries, :food, :languages, :names, :numbers, :scientists, :star_wars, :technology]
+# => [:adjectives, :animals, :architecture, :cities, :colors, :countries, :food, :languages, :names, :numbers, :scientists, :star_wars, :technology]
 ```
 
 Built-in dictionaries include:
 - `:adjectives` - Descriptive adjectives
 - `:animals` - Animal names
 - `:architecture` - Architecture and building terms
+- `:cities` - City names from around the world
 - `:colors` - Color names
 - `:countries` - Country names
 - `:food` - Food and culinary terms
@@ -60,6 +61,9 @@ UniqueNamesGenerator.generate([:scientists, :architecture])
 
 UniqueNamesGenerator.generate([:countries, :food])
 # => Generates ex: "france_croissant"
+
+UniqueNamesGenerator.generate([:adjectives, :cities])
+# => Generates ex: "amazing_tokyo"
 ```
 
 To use custom dictionaries, simply include your list of strings as part of the dictionaries list:
@@ -110,7 +114,7 @@ kiwi
 2. The dictionary becomes immediately available:
 ```elixir
 UniqueNamesGenerator.available_dictionaries()
-# => [:adjectives, :animals, ..., :fruits, ...]
+# => [:adjectives, :animals, ..., :cities, ..., :fruits, ...]
 
 UniqueNamesGenerator.generate([:colors, :fruits])
 # => Generates ex: "purple_mango"
@@ -127,6 +131,7 @@ UniqueNamesGenerator.generate([:colors, :fruits])
 Dictionary data sourced from:
 - Original dictionaries: Custom curated lists
 - Extended dictionaries: [aziele/unique-namer](https://github.com/aziele/unique-namer) repository
+- Cities: [SimpleMaps World Cities Database](https://simplemaps.com/data/world-cities)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE file](https://github.com/jongirard/unique_names_generator/blob/development/LICENSE) for details.

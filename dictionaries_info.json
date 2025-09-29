@@ -50,56 +50,6 @@
       ],
       "word_count": 355
     },
-    "numbers": {
-      "sample_words": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5"
-      ],
-      "word_count": 999
-    },
-    "fruits": {
-      "sample_words": [
-        "apple",
-        "banana",
-        "orange",
-        "grape",
-        "strawberry"
-      ],
-      "word_count": 20
-    },
-    "star_wars": {
-      "sample_words": [
-        "Ackbar",
-        "Adi Gallia",
-        "Anakin Skywalker",
-        "Arvel Crynyd",
-        "Ayla Secura"
-      ],
-      "word_count": 82
-    },
-    "languages": {
-      "sample_words": [
-        "Akan",
-        "Amharic",
-        "Arabic",
-        "Assamese",
-        "Awadhi"
-      ],
-      "word_count": 96
-    },
-    "scientists": {
-      "sample_words": [
-        "agnesi",
-        "albattani",
-        "allen",
-        "almeida",
-        "ampere"
-      ],
-      "word_count": 101
-    },
     "architecture": {
       "sample_words": [
         "abacus",
@@ -109,6 +59,16 @@
         "apse"
       ],
       "word_count": 114
+    },
+    "cities": {
+      "sample_words": [
+        "Aabenraa",
+        "Aachen",
+        "Aadorf",
+        "Aalborg",
+        "Aalen"
+      ],
+      "word_count": 34095
     },
     "countries": {
       "sample_words": [
@@ -129,10 +89,60 @@
         "bacon"
       ],
       "word_count": 139
+    },
+    "fruits": {
+      "sample_words": [
+        "apple",
+        "banana",
+        "orange",
+        "grape",
+        "strawberry"
+      ],
+      "word_count": 20
+    },
+    "languages": {
+      "sample_words": [
+        "Akan",
+        "Amharic",
+        "Arabic",
+        "Assamese",
+        "Awadhi"
+      ],
+      "word_count": 96
+    },
+    "numbers": {
+      "sample_words": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "word_count": 999
+    },
+    "scientists": {
+      "sample_words": [
+        "agnesi",
+        "albattani",
+        "allen",
+        "almeida",
+        "ampere"
+      ],
+      "word_count": 101
+    },
+    "star_wars": {
+      "sample_words": [
+        "Ackbar",
+        "Adi Gallia",
+        "Anakin Skywalker",
+        "Arvel Crynyd",
+        "Ayla Secura"
+      ],
+      "word_count": 82
     }
   },
-  "total_dictionaries": 13,
-  "generated_at": "2025-09-29T05:28:33.522596Z",
+  "total_dictionaries": 14,
+  "generated_at": "2025-09-29T06:12:50.753738Z",
   "permutations": {
     "adjective_animal": {
       "description": "Adjective + Animal (e.g., 'clever_fox')",
@@ -141,7 +151,7 @@
         "animals"
       ],
       "formatted_permutations": "426.7K",
-      "total_permutations": 426710
+      "total_permutations": "426.7K"
     },
     "adjective_color_animal": {
       "description": "Adjective + Color + Animal (e.g., 'clever_red_fox')",
@@ -151,7 +161,7 @@
         "animals"
       ],
       "formatted_permutations": "22.2M",
-      "total_permutations": 22188920
+      "total_permutations": "22.2M"
     },
     "adjective_name": {
       "description": "Adjective + Name (e.g., 'clever_john')",
@@ -160,7 +170,7 @@
         "names"
       ],
       "formatted_permutations": "5.9M",
-      "total_permutations": 5937880
+      "total_permutations": "5.9M"
     },
     "adjective_technology": {
       "description": "Adjective + Technology (e.g., 'clever_algorithm')",
@@ -168,8 +178,8 @@
         "adjectives",
         "technology"
       ],
-      "formatted_permutations": "119.0K",
-      "total_permutations": 118998
+      "formatted_permutations": "119K",
+      "total_permutations": "119K"
     },
     "all_dictionaries": {
       "description": "All available dictionaries combined",
@@ -179,17 +189,18 @@
         "adjectives",
         "technology",
         "animals",
-        "numbers",
-        "fruits",
-        "star_wars",
-        "languages",
-        "scientists",
         "architecture",
+        "cities",
         "countries",
-        "food"
+        "food",
+        "fruits",
+        "languages",
+        "numbers",
+        "scientists",
+        "star_wars"
       ],
-      "formatted_permutations": "4.971544035659533e20B",
-      "total_permutations": 497154403565953258282020864000
+      "formatted_permutations": "999T+",
+      "total_permutations": "999T+"
     },
     "color_animal": {
       "description": "Color + Animal (e.g., 'red_fox')",
@@ -198,7 +209,7 @@
         "animals"
       ],
       "formatted_permutations": "18.5K",
-      "total_permutations": 18460
+      "total_permutations": "18.5K"
     }
   }
 }
