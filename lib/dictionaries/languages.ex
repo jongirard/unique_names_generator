@@ -96,9 +96,9 @@ defmodule UniqueNamesGenerator.Dictionaries.Languages do
     "Yoruba",
     "Yue",
     "Zhuang",
-    "Zulu",
+    "Zulu"
   ]
 
-  @spec list_all() :: [String.t, ...]
+  @spec list_all() :: [String.t(), ...]
   def list_all, do: @terms
 end

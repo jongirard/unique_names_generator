@@ -4940,9 +4940,9 @@ defmodule UniqueNamesGenerator.Dictionaries.Names do
     "Zorine",
     "Zsazsa",
     "Zulema",
-    "Zuzana",
+    "Zuzana"
   ]
 
-  @spec list_all() :: [String.t, ...]
+  @spec list_all() :: [String.t(), ...]
   def list_all, do: @terms
 end

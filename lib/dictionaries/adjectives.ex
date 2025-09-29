@@ -1202,9 +1202,9 @@ defmodule UniqueNamesGenerator.Dictionaries.Adjectives do
     "zonal",
     "zoophagous",
     "zygomorphic",
-    "zygotic",
+    "zygotic"
   ]
 
-  @spec list_all() :: [String.t, ...]
+  @spec list_all() :: [String.t(), ...]
   def list_all, do: @terms
 end

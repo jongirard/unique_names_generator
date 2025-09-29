@@ -355,9 +355,9 @@ defmodule UniqueNamesGenerator.Dictionaries.Animals do
     "wren",
     "xerinae",
     "yak",
-    "zebra",
+    "zebra"
   ]
 
-  @spec list_all() :: [String.t, ...]
+  @spec list_all() :: [String.t(), ...]
   def list_all, do: @terms
 end

@@ -38,13 +38,22 @@ defmodule Impl.DictionariesTest do
     end
 
     test "it can deterministically generate a word using multiple packaged dictionaries" do
-      result = Dictionaries.generate([:adjectives, :animals, :numbers], %{seed: "a5372f76-a4ad-483c-8e48-794caf1b26a0"})
+      result =
+        Dictionaries.generate([:adjectives, :animals, :numbers], %{
+          seed: "a5372f76-a4ad-483c-8e48-794caf1b26a0"
+        })
+
       assert result === "jealous_junglefowl_456"
     end
 
     test "it can deterministically generate a word using multiple packaged and custom dictionaries" do
       drinks = ["Tea", "Juice", "Coffee"]
-      result = Dictionaries.generate([:adjectives, drinks, :numbers], %{seed: "a5372f76-a4ad-483c-8e48-794caf1b26a0"})
+
+      result =
+        Dictionaries.generate([:adjectives, drinks, :numbers], %{
+          seed: "a5372f76-a4ad-483c-8e48-794caf1b26a0"
+        })
+
       assert result === "jealous_juice_456"
     end
 
@@ -56,6 +65,7 @@ defmodule Impl.DictionariesTest do
 
     test "it will raise an ArgumentError when a non dictionary atom is used" do
       typo = :numgberrs
+
       assert_raise ArgumentError, "Dictionary, #{typo} is invalid", fn ->
         Dictionaries.generate([:adjectives, typo])
       end
@@ -72,31 +82,42 @@ defmodule Impl.DictionariesTest do
     seed_integer_cases = %{
       3 => "tan_swift",
       50 => "teal_tiglon",
-      5_049_483 => "maroon_muskox",
+      5_049_483 => "maroon_muskox"
     }
 
-    Enum.each seed_string_cases, fn({input, expected_output}) ->
+    Enum.each(seed_string_cases, fn {input, expected_output} ->
       test "based on a PRNG string based seed of #{input} it can generate a predicted word: #{expected_output}" do
-        assert Dictionaries.generate([:colors, :star_wars], %{seed: unquote(input)}) === unquote(expected_output)
+        assert Dictionaries.generate([:colors, :star_wars], %{seed: unquote(input)}) ===
+                 unquote(expected_output)
       end
-    end
+    end)
 
-    Enum.each seed_integer_cases, fn({input, expected_output}) ->
+    Enum.each(seed_integer_cases, fn {input, expected_output} ->
       test "based on a PRNG integer based seed of #{input} it can generate a predicted word: #{expected_output}" do
-        assert Dictionaries.generate([:colors, :animals], %{seed: unquote(input)}) === unquote(expected_output)
+        assert Dictionaries.generate([:colors, :animals], %{seed: unquote(input)}) ===
+                 unquote(expected_output)
       end
-    end
+    end)
 
     test "it can generate a word using a custom separator string" do
-      assert Dictionaries.generate([:colors, :animals], %{seed: "pigeon", separator: " "}) === "beige carp"
+      assert Dictionaries.generate([:colors, :animals], %{seed: "pigeon", separator: " "}) ===
+               "beige carp"
     end
 
     test "it can generate a word using a custom separator string and capitalized word style" do
-      assert Dictionaries.generate([:colors, :animals], %{seed: "pigeon", separator: " ", style: :capital}) === "Beige Carp"
+      assert Dictionaries.generate([:colors, :animals], %{
+               seed: "pigeon",
+               separator: " ",
+               style: :capital
+             }) === "Beige Carp"
     end
 
     test "it can generate a word using a custom separator string and uppercased word style" do
-      assert Dictionaries.generate([:colors, :animals], %{seed: "soccer", separator: "-", style: :uppercase}) === "MOCCASIN-ORANGUTAN"
+      assert Dictionaries.generate([:colors, :animals], %{
+               seed: "soccer",
+               separator: "-",
+               style: :uppercase
+             }) === "MOCCASIN-ORANGUTAN"
     end
   end
 end

@@ -1,5 +1,6 @@
 defmodule UniqueNamesGenerator do
   alias UniqueNamesGenerator.Impl.Dictionaries
+
   @moduledoc """
   Documentation for `UniqueNamesGenerator`.
   """
@@ -23,7 +24,10 @@ defmodule UniqueNamesGenerator do
       "respectable_bear"
 
   """
-  @spec generate(nonempty_list(Dictionaries.dictionaries() | [String.t, ...])) :: String.t
-  @spec generate(nonempty_list(Dictionaries.dictionaries() | [String.t, ...]), Dictionaries.options()) :: String.t
+  @spec generate(nonempty_list(Dictionaries.dictionaries() | [String.t(), ...])) :: String.t()
+  @spec generate(
+          nonempty_list(Dictionaries.dictionaries() | [String.t(), ...]),
+          Dictionaries.options()
+        ) :: String.t()
   defdelegate generate(dictionaries, options \\ %{}), to: Dictionaries
 end

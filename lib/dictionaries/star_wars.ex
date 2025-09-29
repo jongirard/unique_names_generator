@@ -82,9 +82,9 @@ defmodule UniqueNamesGenerator.Dictionaries.StarWars do
     "Wilhuff Tarkin",
     "Yarael Poof",
     "Yoda",
-    "Zam Wesell",
+    "Zam Wesell"
   ]
 
-  @spec list_all() :: [String.t, ...]
+  @spec list_all() :: [String.t(), ...]
   def list_all, do: @terms
 end

@@ -8,14 +8,15 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
 
   @type style() :: :capital | :titlecase | :uppercase | :lowercase
   @type options() :: %{
-          optional(:separator) => String.t,
+          optional(:separator) => String.t(),
           optional(:style) => style(),
-          optional(:seed) => String.t | integer()
+          optional(:seed) => String.t() | integer()
         }
-  @type dictionaries() :: :animals | :adjectives | :colors | :languages | :names | :numbers | :star_wars
+  @type dictionaries() ::
+          :animals | :adjectives | :colors | :languages | :names | :numbers | :star_wars
   @config %{separator: "_", style: :lowercase, seed: nil}
 
-  @spec camelize_dictionary(atom()) :: String.t
+  @spec camelize_dictionary(atom()) :: String.t()
   defp camelize_dictionary(dictionary) do
     dictionary
     |> Atom.to_string()
@@ -23,7 +24,7 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
   end
 
   @doc false
-  @spec match_word_list(atom()) :: [String.t]
+  @spec match_word_list(atom()) :: [String.t()]
   def match_word_list(dictionary) do
     module = Module.safe_concat(Dictionaries, camelize_dictionary(dictionary))
     module.list_all()
@@ -36,30 +37,33 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
     raise ArgumentError, message: "Dictionary, #{dictionary} is invalid"
   end
 
-  @spec word_list(dictionaries() | [String.t, ...]) :: [String.t]
+  @spec word_list(dictionaries() | [String.t(), ...]) :: [String.t()]
   defp word_list(dictionary) do
     cond do
       is_list(dictionary) ->
         dictionary
+
       is_atom(dictionary) ->
         match_word_list(dictionary)
+
       true ->
         raise ArgumentError, message: "Dictionary contains invalid dictionary type"
     end
   end
 
-  @spec map_dictionaries([dictionaries() | String.t | [String.t, ...], ...]) :: [[String.t]]
+  @spec map_dictionaries([dictionaries() | String.t() | [String.t(), ...], ...]) :: [[String.t()]]
   defp map_dictionaries(dictionaries) do
     Enum.map(dictionaries, fn dictionary -> word_list(dictionary) end)
   end
 
   @doc false
-  @spec call_seeder(String.t | nil) :: %{a: integer(), b: integer(), c: integer()}
+  @spec call_seeder(String.t() | nil) :: %{a: integer(), b: integer(), c: integer()}
   def call_seeder(seed) do
     cond do
       is_nil(seed) == true ->
-        << a :: 32, b :: 32, c :: 32 >> = :crypto.strong_rand_bytes(12)
+        <<a::32, b::32, c::32>> = :crypto.strong_rand_bytes(12)
         %{a: a, b: b, c: c}
+
       is_nil(seed) == false ->
         Seed.generate_seed(seed)
     end
@@ -74,15 +78,18 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
     :rand.uniform()
   end
 
-  @spec format_word(String.t, style()) :: String.t
+  @spec format_word(String.t(), style()) :: String.t()
   defp format_word(word, style) do
     case style do
       :capital ->
         String.capitalize(word)
+
       :titlecase ->
         :string.titlecase(word)
+
       :uppercase ->
         String.upcase(word)
+
       :lowercase ->
         String.downcase(word)
     end
@@ -94,25 +101,29 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
     |> Enum.join(separator)
   end
 
-  @spec set_defaults(options()) :: %{separator: String.t, style: style(), seed: String.t | integer() }
+  @spec set_defaults(options()) :: %{
+          separator: String.t(),
+          style: style(),
+          seed: String.t() | integer()
+        }
   defp set_defaults(options) do
     Enum.into(options, @config)
   end
 
-  @spec generate(nonempty_list(dictionaries() | [String.t, ...])) :: String.t
-  @spec generate(nonempty_list(dictionaries() | [String.t, ...]), options()) :: String.t
+  @spec generate(nonempty_list(dictionaries() | [String.t(), ...])) :: String.t()
+  @spec generate(nonempty_list(dictionaries() | [String.t(), ...]), options()) :: String.t()
   def generate(dictionaries, options \\ %{}) do
     %{separator: separator, style: style, seed: seed} = set_defaults(options)
 
     map_dictionaries(dictionaries)
     |> Enum.reduce(nil, fn x, acc ->
-
       random_float = get_random_float(seed)
       rnd = floor(random_float * length(x))
 
-      word = Enum.at(x, rnd)
-      |> format_with_separator(separator)
-      |> format_word(style)
+      word =
+        Enum.at(x, rnd)
+        |> format_with_separator(separator)
+        |> format_word(style)
 
       if acc do
         "#{acc}#{separator}#{word}"

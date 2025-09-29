@@ -52,9 +52,9 @@ defmodule UniqueNamesGenerator.Dictionaries.Colors do
     "turquoise",
     "violet",
     "white",
-    "yellow",
+    "yellow"
   ]
 
-  @spec list_all() :: [String.t, ...]
+  @spec list_all() :: [String.t(), ...]
   def list_all, do: @terms
 end

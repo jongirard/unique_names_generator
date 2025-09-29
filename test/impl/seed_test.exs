@@ -12,55 +12,114 @@ defmodule Impl.SeedTest do
         %{a: 3182, b: 52_076, c: 62_768}
     }
 
-    Enum.each seed_cases, fn({seed, %{a: a, b: b, c: c}}) ->
+    Enum.each(seed_cases, fn {seed, %{a: a, b: b, c: c}} ->
       test "Given a seed value of (#{seed}) it can generate a map result of: (a):#{a}, (b):#{b}, (c)#{c}" do
-        assert Seed.generate_seed(unquote(seed)) === %{a: unquote(a), b: unquote(b), c: unquote(c)}
+        assert Seed.generate_seed(unquote(seed)) === %{
+                 a: unquote(a),
+                 b: unquote(b),
+                 c: unquote(c)
+               }
       end
-    end
+    end)
   end
 
   describe "remove_decimal/1" do
     seed_float_cases = %{
-      0.08091996633447707 => ["0", "0", "8", "0", "9", "1", "9", "9", "6", "6", "3", "3", "4", "4", "7", "7", "0", "7"],
-      0.4276259101461619 => ["0", "4", "2", "7", "6", "2", "5", "9", "1", "0", "1", "4", "6", "1", "6", "1", "9"]
+      0.08091996633447707 => [
+        "0",
+        "0",
+        "8",
+        "0",
+        "9",
+        "1",
+        "9",
+        "9",
+        "6",
+        "6",
+        "3",
+        "3",
+        "4",
+        "4",
+        "7",
+        "7",
+        "0",
+        "7"
+      ],
+      0.4276259101461619 => [
+        "0",
+        "4",
+        "2",
+        "7",
+        "6",
+        "2",
+        "5",
+        "9",
+        "1",
+        "0",
+        "1",
+        "4",
+        "6",
+        "1",
+        "6",
+        "1",
+        "9"
+      ]
     }
 
-    Enum.each seed_float_cases, fn({float, expected_output}) ->
+    Enum.each(seed_float_cases, fn {float, expected_output} ->
       test "Given a float value of (#{float}) it can generate a list result of: #{expected_output}" do
         assert Seed.remove_decimal(unquote(float)) === unquote(expected_output)
       end
-    end
+    end)
   end
 
   describe "chunk_result/1" do
     seed_list_cases = %{
       ["0", "0", "8", "0", "9", "1", "9", "9", "6", "6", "3", "3", "4", "4", "7", "7", "0", "7"] =>
-        [["0", "0", "8", "0", "9", "1"], ["9", "9", "6", "6", "3", "3"], ["4", "4", "7", "7", "0", "7"]],
-      ["0", "4", "2", "7", "6", "2", "5", "9", "1", "0", "1", "4", "6", "1", "6", "1", "9"] =>
-        [["0", "4", "2", "7", "6"], ["2", "5", "9", "1", "0"], ["1", "4", "6", "1", "6"]],
+        [
+          ["0", "0", "8", "0", "9", "1"],
+          ["9", "9", "6", "6", "3", "3"],
+          ["4", "4", "7", "7", "0", "7"]
+        ],
+      ["0", "4", "2", "7", "6", "2", "5", "9", "1", "0", "1", "4", "6", "1", "6", "1", "9"] => [
+        ["0", "4", "2", "7", "6"],
+        ["2", "5", "9", "1", "0"],
+        ["1", "4", "6", "1", "6"]
+      ]
     }
 
-    Enum.each seed_list_cases, fn({list_input, expected_output}) ->
+    Enum.each(seed_list_cases, fn {list_input, expected_output} ->
       test "Given a list value of (#{list_input}) it can generate a chunked list result" do
         assert Seed.chunk_result(unquote(list_input)) === unquote(expected_output)
       end
-    end
+    end)
   end
 
   describe "convert_chunk_to_map/1" do
     seed_list_cases = %{
-      [["0", "0", "8", "0", "9", "1"], ["9", "9", "6", "6", "3", "3"], ["4", "4", "7", "7", "0", "7"]] =>
-        %{a: 8091, b: 996_633, c: 447_707},
-      [["0", "4", "2", "7", "6"], ["2", "5", "9", "1", "0"], ["1", "4", "6", "1", "6"]] => %{a: 4276, b: 25_910, c: 14_616},
+      [
+        ["0", "0", "8", "0", "9", "1"],
+        ["9", "9", "6", "6", "3", "3"],
+        ["4", "4", "7", "7", "0", "7"]
+      ] => %{a: 8091, b: 996_633, c: 447_707},
+      [["0", "4", "2", "7", "6"], ["2", "5", "9", "1", "0"], ["1", "4", "6", "1", "6"]] => %{
+        a: 4276,
+        b: 25_910,
+        c: 14_616
+      }
     }
 
-    Enum.each seed_list_cases, fn({list_input, %{a: a, b: b, c: c}}) ->
+    Enum.each(seed_list_cases, fn {list_input, %{a: a, b: b, c: c}} ->
       [input_a, _, _] = list_input
 
       test "Given a chunked list value of ([0]#{input_a}, ..., ...) it can generate a mapped result" do
-        assert Seed.convert_chunk_to_map(unquote(list_input)) === %{a: unquote(a), b: unquote(b), c: unquote(c)}
+        assert Seed.convert_chunk_to_map(unquote(list_input)) === %{
+                 a: unquote(a),
+                 b: unquote(b),
+                 c: unquote(c)
+               }
       end
-    end
+    end)
   end
 
   describe "imul/2" do
@@ -71,11 +130,11 @@ defmodule Impl.SeedTest do
       [-5, 12] => -60
     }
 
-    Enum.each seed_integer_cases, fn({[a, b], expected_output}) ->
+    Enum.each(seed_integer_cases, fn {[a, b], expected_output} ->
       test "Given (#{a}, #{b}) it can generate a result of: #{expected_output}" do
         assert Seed.imul(unquote(a), unquote(b)) === unquote(expected_output)
       end
-    end
+    end)
   end
 
   describe "mulberry32/1" do
@@ -83,13 +142,13 @@ defmodule Impl.SeedTest do
       2 => 0.08091996633447707,
       1_041_011_081_081_110 => 0.4276259101461619,
       48_519_810_248_554_854_459_855_101_574_551_519_856_459_710_110_153_459_954_495_250_975_649_545_255_560 =>
-        0.3182520766276866,
+        0.3182520766276866
     }
 
-    Enum.each seed_integer_cases, fn({seed, expected_output}) ->
+    Enum.each(seed_integer_cases, fn {seed, expected_output} ->
       test "Given a seed value of (#{seed}) it can generate a float result of: #{expected_output}" do
         assert Seed.mulberry32(unquote(seed)) === unquote(expected_output)
       end
-    end
+    end)
   end
 end

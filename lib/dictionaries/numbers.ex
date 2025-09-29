@@ -6,7 +6,7 @@ defmodule UniqueNamesGenerator.Dictionaries.Numbers do
   def list_all do
     Enum.to_list(@terms)
     |> Enum.map(fn term ->
-        Integer.to_string(term)
-      end)
-    end
+      Integer.to_string(term)
+    end)
+  end
 end
