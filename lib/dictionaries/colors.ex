@@ -56,5 +56,5 @@ defmodule UniqueNamesGenerator.Dictionaries.Colors do
   ]
 
   @spec list_all() :: [String.t, ...]
-  def list_all(), do: @terms
+  def list_all, do: @terms
 end

@@ -3,11 +3,15 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
     Documentation for `UniqueNamesGenerator.Impl.Dictionaries`.
   """
 
-  alias UniqueNamesGenerator.Impl.Seed
   alias UniqueNamesGenerator.Dictionaries
+  alias UniqueNamesGenerator.Impl.Seed
 
   @type style() :: :capital | :titlecase | :uppercase | :lowercase
-  @type options() :: %{ optional(:separator) => String.t, optional(:style) => style(), optional(:seed) => String.t | integer() }
+  @type options() :: %{
+          optional(:separator) => String.t,
+          optional(:style) => style(),
+          optional(:seed) => String.t | integer()
+        }
   @type dictionaries() :: :animals | :adjectives | :colors | :languages | :names | :numbers | :star_wars
   @config %{separator: "_", style: :lowercase, seed: nil}
 
@@ -21,13 +25,11 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
   @doc false
   @spec match_word_list(atom()) :: [String.t]
   def match_word_list(dictionary) do
-    try do
-      module = Module.safe_concat(Dictionaries, camelize_dictionary(dictionary))
-      module.list_all()
-    rescue
-      UndefinedFunctionError -> raise_invalid_dictionary(dictionary)
-      ArgumentError -> raise_invalid_dictionary(dictionary)
-    end
+    module = Module.safe_concat(Dictionaries, camelize_dictionary(dictionary))
+    module.list_all()
+  rescue
+    UndefinedFunctionError -> raise_invalid_dictionary(dictionary)
+    ArgumentError -> raise_invalid_dictionary(dictionary)
   end
 
   defp raise_invalid_dictionary(dictionary) do
@@ -57,7 +59,7 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
     cond do
       is_nil(seed) == true ->
         << a :: 32, b :: 32, c :: 32 >> = :crypto.strong_rand_bytes(12)
-        %{ a: a, b: b, c: c }
+        %{a: a, b: b, c: c}
       is_nil(seed) == false ->
         Seed.generate_seed(seed)
     end
@@ -65,7 +67,7 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
 
   @spec get_random_float(any()) :: float()
   defp get_random_float(seed) do
-    %{ a: a, b: b, c: c } = call_seeder(seed)
+    %{a: a, b: b, c: c} = call_seeder(seed)
     :rand.seed(:exro928ss, {a, b, c})
 
     # Uses the seed produced above
@@ -112,9 +114,10 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
       |> format_with_separator(separator)
       |> format_word(style)
 
-      cond do
-        acc -> "#{acc}#{separator}#{word}"
-        true -> "#{word}"
+      if acc do
+        "#{acc}#{separator}#{word}"
+      else
+        "#{word}"
       end
     end)
   end

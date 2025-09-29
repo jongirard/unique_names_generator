@@ -61,7 +61,7 @@ defmodule UniqueNamesGenerator.Impl.Seed do
       |> String.to_integer()
     end)
 
-    %{ a: a, b: b, c: c }
+    %{a: a, b: b, c: c}
   end
 
   @doc false
@@ -69,11 +69,11 @@ defmodule UniqueNamesGenerator.Impl.Seed do
   def mulberry32(seed) do
     t = seed + 0x6d2b79f5 ||| 0
 
-    t = imul(bxor(t,(bsr(t, 15))), t ||| 1)
-    t = bxor(t, bsr(t, 7));
+    t = imul(bxor(t, (bsr(t, 15))), t ||| 1)
+    t = bxor(t, bsr(t, 7))
     t = bxor(t, t + imul(bxor(t, bsr(t, 7)), t ||| 61))
 
-    (bxor(t, bsr(t, 14))) / 4294967296
+    (bxor(t, bsr(t, 14))) / 4_294_967_296
   end
 
   @doc false
