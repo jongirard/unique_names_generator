@@ -1,9 +1,7 @@
 defmodule Impl.DictionariesTest do
   use ExUnit.Case
 
-  alias UniqueNamesGenerator.Dictionaries.Adjectives
-  alias UniqueNamesGenerator.Dictionaries.Colors
-  alias UniqueNamesGenerator.Dictionaries.Numbers
+  alias UniqueNamesGenerator.Dictionaries.Loader
   alias UniqueNamesGenerator.Impl.Dictionaries
 
   describe "generate/1" do
@@ -18,16 +16,28 @@ defmodule Impl.DictionariesTest do
 
     test "it can generate a name with multiple packaged dictionaries" do
       result = Dictionaries.generate([:colors, :adjectives])
+      colors_terms = Loader.load_terms(:colors)
+      adjectives_terms = Loader.load_terms(:adjectives)
 
-      assert String.contains?(result, Colors.list_all())
-      assert String.contains?(result, Adjectives.list_all())
+      # Split the result by separator to get individual words
+      words = String.split(result, "_")
+
+      # At least one word should be from colors and one from adjectives
+      assert Enum.any?(words, &(&1 in colors_terms))
+      assert Enum.any?(words, &(&1 in adjectives_terms))
     end
 
     test "it can generate a name with numbers" do
       result = Dictionaries.generate([:colors, :numbers])
+      colors_terms = Loader.load_terms(:colors)
+      numbers_terms = Loader.load_terms(:numbers)
 
-      assert String.contains?(result, Colors.list_all())
-      assert String.contains?(result, Numbers.list_all())
+      # Split the result by separator to get individual words
+      words = String.split(result, "_")
+
+      # At least one word should be from colors and one from numbers
+      assert Enum.any?(words, &(&1 in colors_terms))
+      assert Enum.any?(words, &(&1 in numbers_terms))
     end
 
     test "it can generate a different random result" do

@@ -3,7 +3,7 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
     Documentation for `UniqueNamesGenerator.Impl.Dictionaries`.
   """
 
-  alias UniqueNamesGenerator.Dictionaries
+  alias UniqueNamesGenerator.Dictionaries.Loader
   alias UniqueNamesGenerator.Impl.Seed
 
   @type style() :: :capital | :titlecase | :uppercase | :lowercase
@@ -12,36 +12,25 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
           optional(:style) => style(),
           optional(:seed) => String.t() | integer()
         }
-  @type dictionaries() ::
-          :animals
-          | :adjectives
-          | :colors
-          | :languages
-          | :names
-          | :numbers
-          | :star_wars
-          | :architecture
-          | :countries
-          | :food
-          | :scientists
-          | :technology
+  @type dictionaries() :: atom()
   @config %{separator: "_", style: :lowercase, seed: nil}
 
-  @spec camelize_dictionary(atom()) :: String.t()
-  defp camelize_dictionary(dictionary) do
-    dictionary
-    |> Atom.to_string()
-    |> Macro.camelize()
+  @doc """
+  Returns a list of all available dictionaries based on the text files in the data directory.
+  """
+  @spec available_dictionaries() :: [atom()]
+  def available_dictionaries do
+    Loader.available_dictionaries()
   end
 
   @doc false
   @spec match_word_list(atom()) :: [String.t()]
   def match_word_list(dictionary) do
-    module = Module.safe_concat(Dictionaries, camelize_dictionary(dictionary))
-    module.list_all()
-  rescue
-    UndefinedFunctionError -> raise_invalid_dictionary(dictionary)
-    ArgumentError -> raise_invalid_dictionary(dictionary)
+    if Loader.dictionary_exists?(dictionary) do
+      Loader.load_terms(dictionary)
+    else
+      raise_invalid_dictionary(dictionary)
+    end
   end
 
   defp raise_invalid_dictionary(dictionary) do

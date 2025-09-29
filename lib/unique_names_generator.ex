@@ -30,4 +30,16 @@ defmodule UniqueNamesGenerator do
           Dictionaries.options()
         ) :: String.t()
   defdelegate generate(dictionaries, options \\ %{}), to: Dictionaries
+
+  @doc """
+  Returns a list of all available dictionaries.
+
+  ## Examples
+
+      iex> UniqueNamesGenerator.available_dictionaries()
+      [:adjectives, :animals, :architecture, :colors, :countries, :food, :languages, :names, :numbers, :scientists, :star_wars, :technology]
+
+  """
+  @spec available_dictionaries() :: [atom()]
+  defdelegate available_dictionaries(), to: Dictionaries
 end

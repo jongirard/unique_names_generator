@@ -1,0 +1,204 @@
+{
+  "dictionaries": {
+    "names": {
+      "sample_words": [
+        "Aaren",
+        "Aarika",
+        "Abagael",
+        "Abagail",
+        "Abbe"
+      ],
+      "word_count": 4940
+    },
+    "colors": {
+      "sample_words": [
+        "amaranth",
+        "amber",
+        "amethyst",
+        "apricot",
+        "aqua"
+      ],
+      "word_count": 52
+    },
+    "adjectives": {
+      "sample_words": [
+        "able",
+        "above",
+        "absent",
+        "absolute",
+        "abstract"
+      ],
+      "word_count": 1202
+    },
+    "technology": {
+      "sample_words": [
+        "3dprinter",
+        "3dprinting",
+        "5gnetwork",
+        "accesspoint",
+        "adblocker"
+      ],
+      "word_count": 99
+    },
+    "animals": {
+      "sample_words": [
+        "aardvark",
+        "aardwolf",
+        "albatross",
+        "alligator",
+        "alpaca"
+      ],
+      "word_count": 355
+    },
+    "numbers": {
+      "sample_words": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "word_count": 999
+    },
+    "fruits": {
+      "sample_words": [
+        "apple",
+        "banana",
+        "orange",
+        "grape",
+        "strawberry"
+      ],
+      "word_count": 20
+    },
+    "star_wars": {
+      "sample_words": [
+        "Ackbar",
+        "Adi Gallia",
+        "Anakin Skywalker",
+        "Arvel Crynyd",
+        "Ayla Secura"
+      ],
+      "word_count": 82
+    },
+    "languages": {
+      "sample_words": [
+        "Akan",
+        "Amharic",
+        "Arabic",
+        "Assamese",
+        "Awadhi"
+      ],
+      "word_count": 96
+    },
+    "scientists": {
+      "sample_words": [
+        "agnesi",
+        "albattani",
+        "allen",
+        "almeida",
+        "ampere"
+      ],
+      "word_count": 101
+    },
+    "architecture": {
+      "sample_words": [
+        "abacus",
+        "accolade",
+        "antechamber",
+        "apron",
+        "apse"
+      ],
+      "word_count": 114
+    },
+    "countries": {
+      "sample_words": [
+        "afghanistan",
+        "albania",
+        "algeria",
+        "andorra",
+        "angola"
+      ],
+      "word_count": 182
+    },
+    "food": {
+      "sample_words": [
+        "aperitif",
+        "aroma",
+        "asadero",
+        "asiago",
+        "bacon"
+      ],
+      "word_count": 139
+    }
+  },
+  "total_dictionaries": 13,
+  "generated_at": "2025-09-29T05:28:33.522596Z",
+  "permutations": {
+    "adjective_animal": {
+      "description": "Adjective + Animal (e.g., 'clever_fox')",
+      "dictionaries": [
+        "adjectives",
+        "animals"
+      ],
+      "formatted_permutations": "426.7K",
+      "total_permutations": 426710
+    },
+    "adjective_color_animal": {
+      "description": "Adjective + Color + Animal (e.g., 'clever_red_fox')",
+      "dictionaries": [
+        "adjectives",
+        "colors",
+        "animals"
+      ],
+      "formatted_permutations": "22.2M",
+      "total_permutations": 22188920
+    },
+    "adjective_name": {
+      "description": "Adjective + Name (e.g., 'clever_john')",
+      "dictionaries": [
+        "adjectives",
+        "names"
+      ],
+      "formatted_permutations": "5.9M",
+      "total_permutations": 5937880
+    },
+    "adjective_technology": {
+      "description": "Adjective + Technology (e.g., 'clever_algorithm')",
+      "dictionaries": [
+        "adjectives",
+        "technology"
+      ],
+      "formatted_permutations": "119.0K",
+      "total_permutations": 118998
+    },
+    "all_dictionaries": {
+      "description": "All available dictionaries combined",
+      "dictionaries": [
+        "names",
+        "colors",
+        "adjectives",
+        "technology",
+        "animals",
+        "numbers",
+        "fruits",
+        "star_wars",
+        "languages",
+        "scientists",
+        "architecture",
+        "countries",
+        "food"
+      ],
+      "formatted_permutations": "4.971544035659533e20B",
+      "total_permutations": 497154403565953258282020864000
+    },
+    "color_animal": {
+      "description": "Color + Animal (e.g., 'red_fox')",
+      "dictionaries": [
+        "colors",
+        "animals"
+      ],
+      "formatted_permutations": "18.5K",
+      "total_permutations": 18460
+    }
+  }
+}
