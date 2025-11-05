@@ -1,5 +1,6 @@
 defmodule UniqueNamesGenerator do
   alias UniqueNamesGenerator.Impl.Dictionaries
+
   @moduledoc """
   Documentation for `UniqueNamesGenerator`.
   """
@@ -23,7 +24,22 @@ defmodule UniqueNamesGenerator do
       "respectable_bear"
 
   """
-  @spec generate(nonempty_list(Dictionaries.dictionaries() | [String.t, ...])) :: String.t
-  @spec generate(nonempty_list(Dictionaries.dictionaries() | [String.t, ...]), Dictionaries.options()) :: String.t
+  @spec generate(nonempty_list(Dictionaries.dictionaries() | [String.t(), ...])) :: String.t()
+  @spec generate(
+          nonempty_list(Dictionaries.dictionaries() | [String.t(), ...]),
+          Dictionaries.options()
+        ) :: String.t()
   defdelegate generate(dictionaries, options \\ %{}), to: Dictionaries
+
+  @doc """
+  Returns a list of all available dictionaries.
+
+  ## Examples
+
+      iex> UniqueNamesGenerator.available_dictionaries()
+      [:adjectives, :animals, :architecture, :colors, :countries, :food, :languages, :names, :numbers, :scientists, :star_wars, :technology]
+
+  """
+  @spec available_dictionaries() :: [atom()]
+  defdelegate available_dictionaries(), to: Dictionaries
 end

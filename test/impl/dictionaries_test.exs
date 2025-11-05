@@ -1,10 +1,8 @@
 defmodule Impl.DictionariesTest do
   use ExUnit.Case
 
+  alias UniqueNamesGenerator.Dictionaries.Loader
   alias UniqueNamesGenerator.Impl.Dictionaries
-  alias UniqueNamesGenerator.Dictionaries.Colors
-  alias UniqueNamesGenerator.Dictionaries.Adjectives
-  alias UniqueNamesGenerator.Dictionaries.Numbers
 
   describe "generate/1" do
     test "it can generate a name with default config and packaged dictionary" do
@@ -18,16 +16,28 @@ defmodule Impl.DictionariesTest do
 
     test "it can generate a name with multiple packaged dictionaries" do
       result = Dictionaries.generate([:colors, :adjectives])
+      colors_terms = Loader.load_terms(:colors)
+      adjectives_terms = Loader.load_terms(:adjectives)
 
-      assert String.contains?(result, Colors.list_all())
-      assert String.contains?(result, Adjectives.list_all())
+      # Split the result by separator to get individual words
+      words = String.split(result, "_")
+
+      # At least one word should be from colors and one from adjectives
+      assert Enum.any?(words, &(&1 in colors_terms))
+      assert Enum.any?(words, &(&1 in adjectives_terms))
     end
 
     test "it can generate a name with numbers" do
       result = Dictionaries.generate([:colors, :numbers])
+      colors_terms = Loader.load_terms(:colors)
+      numbers_terms = Loader.load_terms(:numbers)
 
-      assert String.contains?(result, Colors.list_all())
-      assert String.contains?(result, Numbers.list_all())
+      # Split the result by separator to get individual words
+      words = String.split(result, "_")
+
+      # At least one word should be from colors and one from numbers
+      assert Enum.any?(words, &(&1 in colors_terms))
+      assert Enum.any?(words, &(&1 in numbers_terms))
     end
 
     test "it can generate a different random result" do
@@ -38,13 +48,22 @@ defmodule Impl.DictionariesTest do
     end
 
     test "it can deterministically generate a word using multiple packaged dictionaries" do
-      result = Dictionaries.generate([:adjectives, :animals, :numbers], %{ seed: "a5372f76-a4ad-483c-8e48-794caf1b26a0"})
+      result =
+        Dictionaries.generate([:adjectives, :animals, :numbers], %{
+          seed: "a5372f76-a4ad-483c-8e48-794caf1b26a0"
+        })
+
       assert result === "jealous_junglefowl_456"
     end
 
     test "it can deterministically generate a word using multiple packaged and custom dictionaries" do
       drinks = ["Tea", "Juice", "Coffee"]
-      result = Dictionaries.generate([:adjectives, drinks, :numbers], %{ seed: "a5372f76-a4ad-483c-8e48-794caf1b26a0"})
+
+      result =
+        Dictionaries.generate([:adjectives, drinks, :numbers], %{
+          seed: "a5372f76-a4ad-483c-8e48-794caf1b26a0"
+        })
+
       assert result === "jealous_juice_456"
     end
 
@@ -56,6 +75,7 @@ defmodule Impl.DictionariesTest do
 
     test "it will raise an ArgumentError when a non dictionary atom is used" do
       typo = :numgberrs
+
       assert_raise ArgumentError, "Dictionary, #{typo} is invalid", fn ->
         Dictionaries.generate([:adjectives, typo])
       end
@@ -72,31 +92,42 @@ defmodule Impl.DictionariesTest do
     seed_integer_cases = %{
       3 => "tan_swift",
       50 => "teal_tiglon",
-      5049483 => "maroon_muskox",
+      5_049_483 => "maroon_muskox"
     }
 
-    Enum.each seed_string_cases, fn({input, expected_output}) ->
+    Enum.each(seed_string_cases, fn {input, expected_output} ->
       test "based on a PRNG string based seed of #{input} it can generate a predicted word: #{expected_output}" do
-        assert Dictionaries.generate([:colors, :star_wars], %{ seed: unquote(input) }) === unquote(expected_output)
+        assert Dictionaries.generate([:colors, :star_wars], %{seed: unquote(input)}) ===
+                 unquote(expected_output)
       end
-    end
+    end)
 
-    Enum.each seed_integer_cases, fn({input, expected_output}) ->
+    Enum.each(seed_integer_cases, fn {input, expected_output} ->
       test "based on a PRNG integer based seed of #{input} it can generate a predicted word: #{expected_output}" do
-        assert Dictionaries.generate([:colors, :animals], %{ seed: unquote(input) }) === unquote(expected_output)
+        assert Dictionaries.generate([:colors, :animals], %{seed: unquote(input)}) ===
+                 unquote(expected_output)
       end
-    end
+    end)
 
     test "it can generate a word using a custom separator string" do
-      assert Dictionaries.generate([:colors, :animals], %{ seed: "pigeon", separator: " " }) === "beige carp"
+      assert Dictionaries.generate([:colors, :animals], %{seed: "pigeon", separator: " "}) ===
+               "beige carp"
     end
 
     test "it can generate a word using a custom separator string and capitalized word style" do
-      assert Dictionaries.generate([:colors, :animals], %{ seed: "pigeon", separator: " ", style: :capital }) === "Beige Carp"
+      assert Dictionaries.generate([:colors, :animals], %{
+               seed: "pigeon",
+               separator: " ",
+               style: :capital
+             }) === "Beige Carp"
     end
 
     test "it can generate a word using a custom separator string and uppercased word style" do
-      assert Dictionaries.generate([:colors, :animals], %{ seed: "soccer", separator: "-", style: :uppercase }) === "MOCCASIN-ORANGUTAN"
+      assert Dictionaries.generate([:colors, :animals], %{
+               seed: "soccer",
+               separator: "-",
+               style: :uppercase
+             }) === "MOCCASIN-ORANGUTAN"
     end
   end
 end

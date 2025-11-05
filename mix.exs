@@ -28,15 +28,19 @@ defmodule UniqueNamesGenerator.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      { :ex_doc, "~> 0.31", only: :dev, runtime: false },
-      { :dialyxir, "~> 1.3", only: :dev, runtime: false },
+      {:jason, "~> 1.4.4"},
+      {:ex_doc, "~> 0.31", only: :dev, runtime: false},
+      {:dialyxir, "~> 1.3", only: :dev, runtime: false},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:git_hooks, "~> 0.7.3", only: [:dev], runtime: false}
     ]
   end
 
   # ExDoc config
   defp docs() do
     [
-      main: "readme", # The main page (entry point) in the docs
+      # The main page (entry point) in the docs
+      main: "readme",
       name: "UniqueNamesGenerator",
       canonical: "https://hexdocs.pm/unique_names_generator",
       source_url: @source_url,

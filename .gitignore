@@ -24,3 +24,6 @@ unique_names_generator-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+.DS_Store
+.serena
