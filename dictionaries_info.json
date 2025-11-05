@@ -1,148 +1,148 @@
 {
   "dictionaries": {
     "names": {
+      "word_count": 4940,
       "sample_words": [
         "Aaren",
         "Aarika",
         "Abagael",
         "Abagail",
         "Abbe"
-      ],
-      "word_count": 4940
+      ]
     },
     "colors": {
+      "word_count": 52,
       "sample_words": [
         "amaranth",
         "amber",
         "amethyst",
         "apricot",
         "aqua"
-      ],
-      "word_count": 52
-    },
-    "adjectives": {
-      "sample_words": [
-        "able",
-        "above",
-        "absent",
-        "absolute",
-        "abstract"
-      ],
-      "word_count": 1202
-    },
-    "technology": {
-      "sample_words": [
-        "3dprinter",
-        "3dprinting",
-        "5gnetwork",
-        "accesspoint",
-        "adblocker"
-      ],
-      "word_count": 99
-    },
-    "animals": {
-      "sample_words": [
-        "aardvark",
-        "aardwolf",
-        "albatross",
-        "alligator",
-        "alpaca"
-      ],
-      "word_count": 355
-    },
-    "architecture": {
-      "sample_words": [
-        "abacus",
-        "accolade",
-        "antechamber",
-        "apron",
-        "apse"
-      ],
-      "word_count": 114
+      ]
     },
     "cities": {
+      "word_count": 34095,
       "sample_words": [
         "Aabenraa",
         "Aachen",
         "Aadorf",
         "Aalborg",
         "Aalen"
-      ],
-      "word_count": 34095
-    },
-    "countries": {
-      "sample_words": [
-        "afghanistan",
-        "albania",
-        "algeria",
-        "andorra",
-        "angola"
-      ],
-      "word_count": 182
-    },
-    "food": {
-      "sample_words": [
-        "aperitif",
-        "aroma",
-        "asadero",
-        "asiago",
-        "bacon"
-      ],
-      "word_count": 139
-    },
-    "fruits": {
-      "sample_words": [
-        "apple",
-        "banana",
-        "orange",
-        "grape",
-        "strawberry"
-      ],
-      "word_count": 20
-    },
-    "languages": {
-      "sample_words": [
-        "Akan",
-        "Amharic",
-        "Arabic",
-        "Assamese",
-        "Awadhi"
-      ],
-      "word_count": 96
+      ]
     },
     "numbers": {
+      "word_count": 999,
       "sample_words": [
         "1",
         "2",
         "3",
         "4",
         "5"
-      ],
-      "word_count": 999
+      ]
     },
-    "scientists": {
+    "fruits": {
+      "word_count": 20,
       "sample_words": [
-        "agnesi",
-        "albattani",
-        "allen",
-        "almeida",
-        "ampere"
-      ],
-      "word_count": 101
+        "apple",
+        "banana",
+        "orange",
+        "grape",
+        "strawberry"
+      ]
     },
     "star_wars": {
+      "word_count": 82,
       "sample_words": [
         "Ackbar",
         "Adi Gallia",
         "Anakin Skywalker",
         "Arvel Crynyd",
         "Ayla Secura"
-      ],
-      "word_count": 82
+      ]
+    },
+    "languages": {
+      "word_count": 96,
+      "sample_words": [
+        "Akan",
+        "Amharic",
+        "Arabic",
+        "Assamese",
+        "Awadhi"
+      ]
+    },
+    "animals": {
+      "word_count": 355,
+      "sample_words": [
+        "aardvark",
+        "aardwolf",
+        "albatross",
+        "alligator",
+        "alpaca"
+      ]
+    },
+    "scientists": {
+      "word_count": 101,
+      "sample_words": [
+        "agnesi",
+        "albattani",
+        "allen",
+        "almeida",
+        "ampere"
+      ]
+    },
+    "adjectives": {
+      "word_count": 1202,
+      "sample_words": [
+        "able",
+        "above",
+        "absent",
+        "absolute",
+        "abstract"
+      ]
+    },
+    "architecture": {
+      "word_count": 114,
+      "sample_words": [
+        "abacus",
+        "accolade",
+        "antechamber",
+        "apron",
+        "apse"
+      ]
+    },
+    "countries": {
+      "word_count": 182,
+      "sample_words": [
+        "afghanistan",
+        "albania",
+        "algeria",
+        "andorra",
+        "angola"
+      ]
+    },
+    "technology": {
+      "word_count": 99,
+      "sample_words": [
+        "3dprinter",
+        "3dprinting",
+        "5gnetwork",
+        "accesspoint",
+        "adblocker"
+      ]
+    },
+    "food": {
+      "word_count": 139,
+      "sample_words": [
+        "aperitif",
+        "aroma",
+        "asadero",
+        "asiago",
+        "bacon"
+      ]
     }
   },
+  "generated_at": "2025-11-05T12:42:56.338450Z",
   "total_dictionaries": 14,
-  "generated_at": "2025-09-29T06:12:50.753738Z",
   "permutations": {
     "adjective_animal": {
       "description": "Adjective + Animal (e.g., 'clever_fox')",
@@ -186,18 +186,18 @@
       "dictionaries": [
         "names",
         "colors",
-        "adjectives",
-        "technology",
-        "animals",
-        "architecture",
         "cities",
-        "countries",
-        "food",
-        "fruits",
-        "languages",
         "numbers",
+        "fruits",
+        "star_wars",
+        "languages",
+        "animals",
         "scientists",
-        "star_wars"
+        "adjectives",
+        "architecture",
+        "countries",
+        "technology",
+        "food"
       ],
       "formatted_permutations": "999T+",
       "total_permutations": "999T+"

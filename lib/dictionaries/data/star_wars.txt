@@ -14,12 +14,12 @@ Bossk
 C-3PO
 Chewbacca
 Cliegg Lars
-Cordé
+Cord
 Darth Maul
 Darth Vader
 Dexter Jettster
 Dooku
-Dormé
+Dorm
 Dud Bolt
 Eeth Koth
 Finis Valorum
@@ -49,7 +49,7 @@ Nien Nunb
 Nute Gunray
 Obi-Wan Kenobi
 Owen Lars
-Padmé Amidala
+Padm Amidala
 Palpatine
 Plo Koon
 Poggle the Lesser
@@ -60,7 +60,7 @@ R4-P17
 R5-D4
 Ratts Tyerel
 Raymus Antilles
-Ric Olié
+Ric Oli
 Roos Tarpals
 Rugor Nass
 Saesee Tiin
