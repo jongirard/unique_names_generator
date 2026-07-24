@@ -16,6 +16,15 @@ defmodule Impl.SeedTest do
         assert Seed.generate_seed(unquote(seed)) === %{ a: unquote(a), b: unquote(b), c: unquote(c) }
       end
     end
+
+    # Regression: some seeds hash (via mulberry32) to a small float that
+    # Float.to_string/1 renders in scientific notation, e.g. "eow" -> 9.02e-6.
+    # The "e"/"-" characters used to survive into a chunk and crash
+    # String.to_integer/1 (`binary_to_integer("...e-...")`). It must now yield a
+    # deterministic map instead of raising.
+    test "does not crash on seeds whose mulberry32 float is in scientific notation" do
+      assert Seed.generate_seed("eow") === %{a: 90256, b: 79901, c: 24225}
+    end
   end
 
   describe "remove_decimal/1" do
@@ -28,6 +37,14 @@ defmodule Impl.SeedTest do
       test "Given a float value of (#{float}) it can generate a list result of: #{expected_output}" do
         assert Seed.remove_decimal(unquote(float)) === unquote(expected_output)
       end
+    end
+
+    # A small float renders in scientific notation ("9.025679901242256e-6");
+    # remove_decimal/1 must keep only digits, dropping the ".", "e" and "-" so
+    # that the downstream String.to_integer/1 never sees a non-digit.
+    test "keeps only digits for scientific-notation floats (drops '.', 'e', sign)" do
+      assert Seed.remove_decimal(9.025679901242256e-6) ===
+               ["9", "0", "2", "5", "6", "7", "9", "9", "0", "1", "2", "4", "2", "2", "5", "6", "6"]
     end
   end
 
