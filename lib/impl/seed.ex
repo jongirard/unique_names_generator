@@ -36,10 +36,17 @@ defmodule UniqueNamesGenerator.Impl.Seed do
   @doc false
   @spec remove_decimal(float()) :: [String.t]
   def remove_decimal(float) do
+    # Keep only digits. `Float.to_string/1` renders small floats in scientific
+    # notation (e.g. 7.458e-5), so the string can contain not just the decimal
+    # point but also "e" and the exponent's "-"/"+". Those non-digit characters
+    # used to survive into the chunks and crash `String.to_integer/1`
+    # (e.g. `binary_to_integer("8542e-")`). Filtering to digits strips all of
+    # them at once; for ordinary (non-scientific) floats this is identical to
+    # dropping the ".", so existing seed results are unchanged.
     float
     |> Float.to_string()
     |> String.codepoints
-    |> Enum.filter(fn stringified_point -> stringified_point !== "." end)
+    |> Enum.filter(fn codepoint -> codepoint =~ ~r/\d/ end)
   end
 
   @doc false
