@@ -39,13 +39,13 @@ defmodule Impl.DictionariesTest do
 
     test "it can deterministically generate a word using multiple packaged dictionaries" do
       result = Dictionaries.generate([:adjectives, :animals, :numbers], %{ seed: "a5372f76-a4ad-483c-8e48-794caf1b26a0"})
-      assert result === "jealous_junglefowl_456"
+      assert result === "jealous_bass_465"
     end
 
     test "it can deterministically generate a word using multiple packaged and custom dictionaries" do
       drinks = ["Tea", "Juice", "Coffee"]
       result = Dictionaries.generate([:adjectives, drinks, :numbers], %{ seed: "a5372f76-a4ad-483c-8e48-794caf1b26a0"})
-      assert result === "jealous_juice_456"
+      assert result === "jealous_tea_465"
     end
 
     test "it will throw an ArgumentError when a string dictionary reference is used" do
@@ -65,14 +65,14 @@ defmodule Impl.DictionariesTest do
   describe "generate/2" do
     seed_string_cases = %{
       "hello" => "lavender_mace_windu",
-      "5976423a-ee35-11e3-8569-14109ff1a304" => "indigo_leia_organa",
-      "03bf0706-b7e9-33b8-aee5-c6142a816478" => "brown_dooku"
+      "5976423a-ee35-11e3-8569-14109ff1a304" => "indigo_han_solo",
+      "03bf0706-b7e9-33b8-aee5-c6142a816478" => "brown_lama_su"
     }
 
     seed_integer_cases = %{
-      3 => "tan_swift",
-      50 => "teal_tiglon",
-      5049483 => "maroon_muskox",
+      3 => "tan_bandicoot",
+      50 => "teal_spoonbill",
+      5049483 => "maroon_octopus",
     }
 
     Enum.each seed_string_cases, fn({input, expected_output}) ->
@@ -88,15 +88,15 @@ defmodule Impl.DictionariesTest do
     end
 
     test "it can generate a word using a custom separator string" do
-      assert Dictionaries.generate([:colors, :animals], %{ seed: "pigeon", separator: " " }) === "beige carp"
+      assert Dictionaries.generate([:colors, :animals], %{ seed: "pigeon", separator: " " }) === "beige dingo"
     end
 
     test "it can generate a word using a custom separator string and capitalized word style" do
-      assert Dictionaries.generate([:colors, :animals], %{ seed: "pigeon", separator: " ", style: :capital }) === "Beige Carp"
+      assert Dictionaries.generate([:colors, :animals], %{ seed: "pigeon", separator: " ", style: :capital }) === "Beige Dingo"
     end
 
     test "it can generate a word using a custom separator string and uppercased word style" do
-      assert Dictionaries.generate([:colors, :animals], %{ seed: "soccer", separator: "-", style: :uppercase }) === "MOCCASIN-ORANGUTAN"
+      assert Dictionaries.generate([:colors, :animals], %{ seed: "soccer", separator: "-", style: :uppercase }) === "MOCCASIN-BISON"
     end
   end
 end

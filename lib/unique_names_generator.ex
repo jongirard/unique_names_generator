@@ -12,12 +12,12 @@ defmodule UniqueNamesGenerator do
       iex> UniqueNamesGenerator.generate([:colors, :animals], %{seed: "hello", style: :capital, separator: " "})
       "Lavender Marlin"
 
-      iex> UniqueNamesGenerator.generate([:colors, :star_wars], %{seed: "03bf0706-b7e9-33b8-aee5-c6142a816478", style: :capital, separator: " "})
-      "Brown Dooku"
+      iex> UniqueNamesGenerator.generate([:colors, :star_wars], %{seed: "0a7437f7-f40b-4edb-bac5-96ba10a1c7ab", style: :capital, separator: " "})
+      "Purple Palpatine"
 
       iex> drinks = ["Sprite", "Coca-Cola", "Juice", "Tea"]
       iex(1)> UniqueNamesGenerator.generate([:colors, drinks, :numbers], %{seed: 50, style: :capital, separator: "-"})
-      "Teal-Tea-902"
+      "Teal-Tea-64"
 
       iex> UniqueNamesGenerator.generate([:adjectives, :animals])
       "respectable_bear"

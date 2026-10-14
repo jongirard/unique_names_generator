@@ -52,24 +52,23 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
   end
 
   @doc false
-  @spec call_seeder(String.t | nil) :: %{a: integer(), b: integer(), c: integer()}
-  def call_seeder(seed) do
-    cond do
-      is_nil(seed) == true ->
-        << a :: 32, b :: 32, c :: 32 >> = :crypto.strong_rand_bytes(12)
-        %{ a: a, b: b, c: c }
-      is_nil(seed) == false ->
-        Seed.generate_seed(seed)
-    end
+  @spec call_seeder(String.t() | nil) :: %{a: integer(), b: integer(), c: integer()}
+  def call_seeder(nil) do
+    <<a::32, b::32, c::32>> = :crypto.strong_rand_bytes(12)
+    %{a: a, b: b, c: c}
   end
 
-  @spec get_random_float(any()) :: float()
-  defp get_random_float(seed) do
-    %{ a: a, b: b, c: c } = call_seeder(seed)
-    :rand.seed(:exro928ss, {a, b, c})
+  def call_seeder(seed) do
+    Seed.generate_seed(seed)
+  end
 
-    # Uses the seed produced above
-    :rand.uniform()
+  @spec seed_prng(String.t() | nil) :: :ok
+  defp seed_prng(seed) do
+    %{a: a, b: b, c: c} = call_seeder(seed)
+    # Stores seeded state in the process dictionary.
+    # Calls to :rand.uniform() advance the state
+    _ = :rand.seed(:exro928ss, {a, b, c})
+    :ok
   end
 
   @spec format_word(String.t, style()) :: String.t
@@ -102,10 +101,11 @@ defmodule UniqueNamesGenerator.Impl.Dictionaries do
   def generate(dictionaries, options \\ %{}) do
     %{separator: separator, style: style, seed: seed} = set_defaults(options)
 
+    :ok = seed_prng(seed)
+
     map_dictionaries(dictionaries)
     |> Enum.reduce(nil, fn x, acc ->
-
-      random_float = get_random_float(seed)
+      random_float = :rand.uniform()
       rnd = floor(random_float * length(x))
 
       word = Enum.at(x, rnd)

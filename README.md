@@ -56,11 +56,11 @@ UniqueNamesGenerator.generate([:colors, :animals], %{ style: :capital, separator
 
 A seed can be used to deterministically generate a name. As long as the provided seed is the same, then the generated name will also always be the same. Simply provide a string or integer in the [options config map](`t:UniqueNamesGenerator.Impl.Dictionaries.options/0`) of the seed key, ie; `%{ seed: "hello" }`. 
 
-_(**Usecase example:** generate a username for an authenticated user based on UUID. Ex: `03bf0706-b7e9-33b8-aee5-c6142a816478` will always generate the name "brown_dooku_247" when used together with the colors/star_wars/numbers dictionaries)._
+_(**Usecase example:** generate a username for an authenticated user based on UUID. Ex: `0a7437f7-f40b-4edb-bac5-96ba10a1c7ab` will always generate the name "purple_palpatine_479" when used together with the colors/star_wars/numbers dictionaries)._
 
 ```elixir
-UniqueNamesGenerator.generate([:colors, :star_wars, :numbers], %{ seed: "03bf0706-b7e9-33b8-aee5-c6142a816478" })
-# => Seed "03bf0706-b7e9-33b8-aee5-c6142a816478" always generates: "brown_dooku_247"
+UniqueNamesGenerator.generate([:colors, :star_wars, :numbers], %{ seed: "0a7437f7-f40b-4edb-bac5-96ba10a1c7ab" })
+# => Seed "0a7437f7-f40b-4edb-bac5-96ba10a1c7ab" always generates: "purple_palpatine_479"
 ```
 
 ## License
